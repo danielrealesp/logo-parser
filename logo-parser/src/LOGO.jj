@@ -1,0 +1,106 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */
+
+
+/*
+
+GRAMÁTICA DEL LENGUAJE
+
+
+1.  S→INS (INS)*
+
+2.  INS→ FORWARD | RIGHT |LEFT | REPEAT |PENUP | PENDOWN "."
+
+3.FORWARD→("FORWARD" | "FD") CONSTANT 
+
+4. CONSTANT →["0"-"9"]+
+
+5. RIGHT→("RIGHT" | "RT) CONSTANT 
+
+6. LEFT→(LEFT | LT) CONSTANT 
+
+7. REPEAT→REPEAT CONSTANT "[" S "]"
+
+8.  PENUP→PENUP
+
+9. PENDOWN→PENDOWN
+
+
+
+*/options{  static = true;}PARSER_BEGIN(LOGO)public class LOGO {  public static void main(String args []) throws ParseException  {
+    LOGO parser = new LOGO(System.in);   while (true)    {      try      {
+        System.out.println("Ingrese un nuevo programa completo de LOGO a continuación: ");
+        LOGO.ins();
+        System.out.println("Instrucción correcta");
+      }      catch (Exception e)      {        System.out.println("NOK.");        System.out.println(e.getMessage());        LOGO.ReInit(System.in);
+       }      catch (Error e)      {        System.out.println("Oops.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(LOGO)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* FUNCTIONS */{  < FORWARD: "FORWARD" >| < FD: "FD" >| < RIGHT: "RIGHT" >| < RT: "RT" >
+| < LEFT: "LEFT" >
+| < LT: "LT" >
+| < REPEAT: "REPEAT" >
+| < PENUP: "PENUP" >
+| < PENDOWN: "PENDOWN" >
+
+}TOKEN :{  < CONSTANT : (< DIGIT >)+ >
+| < PERIOD: "." >
+| < #DIGIT : [ "0"-"9" ] >
+| < LB: "[" >
+| < RB: "]" >
+}
+void read_instructions():
+{ }
+{
+  	ins() (ins())*
+}
+
+
+void ins():
+{ }
+{
+	( forward()
+	| right() 	| left()
+	| repeat() 
+	| penup() 
+	| pendown() 
+	)<PERIOD>
+	
+}
+
+void forward():
+{ }
+{
+	(<FORWARD> | <FD>) <CONSTANT>
+}
+
+
+void right():
+{ }
+{
+	(<RIGHT> | <RT>) <CONSTANT>
+}
+
+
+void left():
+{ }
+{
+	(<LEFT> | <LT>) <CONSTANT>
+}
+
+
+void repeat():
+{ }
+{
+	<REPEAT> <CONSTANT> <LB> (ins())+ <RB>
+}
+
+void penup():
+{ }
+{
+	<PENUP>
+}
+
+void pendown():
+{ }
+{
+	<PENDOWN>
+}
